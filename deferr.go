@@ -1,0 +1,12 @@
+package deferr
+
+import (
+	"fmt"
+)
+
+func Format(err *error, format string, as ...interface{}) {
+	if *err != nil {
+		format, as = fmt.Sprintf("%s: %%v", format), append(as, *err)
+		*err = fmt.Errorf(format, as...)
+	}
+}
