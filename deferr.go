@@ -10,3 +10,10 @@ func Format(err *error, format string, as ...interface{}) {
 		*err = fmt.Errorf(format, as...)
 	}
 }
+
+func Wrapf(err *error, format string, as ...interface{}) {
+	if *err != nil {
+		format, as = fmt.Sprintf("%s: %%w", format), append(as, *err)
+		*err = fmt.Errorf(format, as...)
+	}
+}
