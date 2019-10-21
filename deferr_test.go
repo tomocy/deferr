@@ -17,6 +17,9 @@ func TestFormat(t *testing.T) {
 	if actual.Error() != expected {
 		t.Errorf("unexpected error: got %s, expected %s\n", actual, expected)
 	}
+	if errors.Unwrap(actual) != nil {
+		t.Errorf("unexpected unwrapeed error: got %s, expected nil", errors.Unwrap(actual))
+	}
 }
 
 func TestWrapf(t *testing.T) {
