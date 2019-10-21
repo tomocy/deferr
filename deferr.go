@@ -17,3 +17,8 @@ func Wrapf(err *error, format string, as ...interface{}) {
 		*err = fmt.Errorf(format, as...)
 	}
 }
+
+type Verb struct {
+	flag, width, prec int
+	verb              rune
+}
