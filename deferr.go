@@ -7,17 +7,21 @@ import (
 )
 
 func Format(err *error, format string, as ...interface{}) {
-	if *err != nil {
-		format, as = wrapFormat(format, Verb{Verb: 'v'}), append(as, *err)
-		*err = fmt.Errorf(format, as...)
+	if *err == nil {
+		return
 	}
+
+	format, as = wrapFormat(format, Verb{Verb: 'v'}), append(as, *err)
+	*err = fmt.Errorf(format, as...)
 }
 
 func Wrapf(err *error, format string, as ...interface{}) {
-	if *err != nil {
-		format, as = wrapFormat(format, Verb{Verb: 'w'}), append(as, *err)
-		*err = fmt.Errorf(format, as...)
+	if *err == nil {
+		return
 	}
+
+	format, as = wrapFormat(format, Verb{Verb: 'w'}), append(as, *err)
+	*err = fmt.Errorf(format, as...)
 }
 
 func wrapFormat(format string, verb Verb) string {
