@@ -21,23 +21,23 @@ func Wrapf(err *error, format string, as ...interface{}) {
 }
 
 type Verb struct {
-	flag, width, prec int
-	verb              rune
+	Flag, Width, Prec int
+	Verb              rune
 }
 
 func (v Verb) String() string {
 	var w strings.Builder
 	fmt.Fprint(&w, "%")
-	if isFlag(v.flag) {
-		fmt.Fprint(&w, string([]rune{rune(v.flag)}))
+	if isFlag(v.Flag) {
+		fmt.Fprint(&w, string([]rune{rune(v.Flag)}))
 	}
-	if v.width != 0 {
-		fmt.Fprint(&w, v.width)
+	if v.Width != 0 {
+		fmt.Fprint(&w, v.Width)
 	}
-	if v.prec != 0 {
-		fmt.Fprint(&w, ".", v.prec)
+	if v.Prec != 0 {
+		fmt.Fprint(&w, ".", v.Prec)
 	}
-	fmt.Fprint(&w, string([]rune{v.verb}))
+	fmt.Fprint(&w, string([]rune{v.Verb}))
 
 	return w.String()
 }
