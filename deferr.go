@@ -8,16 +8,20 @@ import (
 
 func Format(err *error, format string, as ...interface{}) {
 	if *err != nil {
-		format, as = fmt.Sprintf("%s: %%v", format), append(as, *err)
+		format, as = wrapFormat(format, Verb{Verb: 'v'}), append(as, *err)
 		*err = fmt.Errorf(format, as...)
 	}
 }
 
 func Wrapf(err *error, format string, as ...interface{}) {
 	if *err != nil {
-		format, as = fmt.Sprintf("%s: %%w", format), append(as, *err)
+		format, as = wrapFormat(format, Verb{Verb: 'w'}), append(as, *err)
 		*err = fmt.Errorf(format, as...)
 	}
+}
+
+func wrapFormat(format string, verb Verb) string {
+	return fmt.Sprintf("%s: %s", format, verb)
 }
 
 type Verb struct {
