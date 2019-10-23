@@ -24,6 +24,10 @@ func Wrapf(err *error, format string, as ...interface{}) {
 	*err = fmt.Errorf(format, as...)
 }
 
+type VerbMap map[verbKey]Verb
+
+type verbKey int
+
 func wrapFormat(format string, verb Verb) string {
 	return fmt.Sprintf("%s: %s", format, verb)
 }
