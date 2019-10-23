@@ -1,4 +1,5 @@
 # deferr
+[![GoDoc](https://godoc.org/github.com/tomocy/deferr?status.svg)](https://godoc.org/github.com/tomocy/deferr)
 
 deferr provides a way to simplify error handling with defer.  
 
