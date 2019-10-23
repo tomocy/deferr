@@ -28,6 +28,12 @@ type VerbMap map[verbKey]Verb
 
 type verbKey int
 
+const (
+	_ verbKey = iota
+	KeyFormat
+	KeyWrap
+)
+
 func wrapFormat(format string, verb Verb) string {
 	return fmt.Sprintf("%s: %s", format, verb)
 }
