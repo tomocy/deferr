@@ -7,21 +7,15 @@ import (
 )
 
 func Format(err *error, format string, as ...interface{}) {
-	if *err == nil {
-		return
-	}
-
-	format, as = wrapFormat(format, Verb{Verb: 'v'}), append(as, *err)
-	*err = fmt.Errorf(format, as...)
+	DefaultVerbMap.Format(err, format, as...)
 }
 
 func Wrapf(err *error, format string, as ...interface{}) {
-	if *err == nil {
-		return
-	}
+	DefaultVerbMap.Wrapf(err, format, as...)
+}
 
-	format, as = wrapFormat(format, Verb{Verb: 'w'}), append(as, *err)
-	*err = fmt.Errorf(format, as...)
+var DefaultVerbMap = VerbMap{
+	KeyFormat: {Verb: 'v'}, KeyWrap: {Verb: 'w'},
 }
 
 type VerbMap map[verbKey]Verb
