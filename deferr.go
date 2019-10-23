@@ -35,6 +35,15 @@ func (m VerbMap) Format(err *error, format string, as ...interface{}) {
 	*err = fmt.Errorf(format, as...)
 }
 
+func (m VerbMap) Wrapf(err *error, format string, as ...interface{}) {
+	if *err == nil {
+		return
+	}
+
+	format, as = wrapFormat(format, m[KeyWrap]), append(as, *err)
+	*err = fmt.Errorf(format, as...)
+}
+
 type verbKey int
 
 const (
