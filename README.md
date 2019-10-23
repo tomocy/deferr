@@ -7,50 +7,38 @@ deferr provides a way to simplify error handling with defer.
 go get github.com/tomocy/deferr
 ```
 
-## Example
+## Expected usage
 ```go
-func ExampleFormat() {
-	err := func() (err error) {
-		defer deferr.Format(&err, "failed to foo")
+func foo() (err error) {
+	defer deferr.Format(&err, "failed to foo")
 
-		return errors.New("bar")
-	}()
+	a, err := doA()
+	if err != nil {
+		return err
+	}
 
-	fmt.Println(err)
-	// Output:
-	// failed to foo: bar
-}
+	b, err := doB()
+	if err != nil {
+		return err
+	}
 
-func ExampleWrapf() {
-	err := func() (err error) {
-		defer deferr.Wrapf(&err, "failed to foo")
-
-		return errors.New("bar")
-	}()
-
-	fmt.Println(err)
-	fmt.Println(errors.Unwrap(err))
-	// Output:
-	// failed to foo: bar
-	// bar
+	return nil
 }
 ```
 
-This behavior can be customized by defining your `VerbMap`.  
+This example reduces the conventional duplication of error handling like the below.
 ```go
-func ExampleCustomizedFormat() {
-	err := func() (err error) {
-		defer deferr.VerbMap{
-            deferr.KeyFormat: {
-                Flag: '#', Verb: 'v',
-            },
-        }.Format(&err, "failed to foo")
+func foo() error {
+	a, err := doA()
+	if err != nil {
+		return fmt.Errorf("failed to foo: %v", err)
+	}
 
-		return errors.New("bar")
-	}()
+	b, err := doB()
+	if err != nil {
+		return fmt.Errorf("failed to foo: %v", err)
+	}
 
-	fmt.Println(err)
-	// Output:
-    // failed to foo: &errors.errorString{s:"bar"}
+	return nil
 }
 ```
